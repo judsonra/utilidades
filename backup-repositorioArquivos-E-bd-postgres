@@ -1,0 +1,41 @@
+script:@echo off
+   @echo.
+   @echo Iniciando o backup ...
+   @echo.
+
+REM ///////////////////////////////////////////////////////////
+REM // Define as variaveis de data //
+REM ///////////////////////////////////////////////////////////
+
+@Rem make var nowDay
+FOR /F "TOKENS=1* DELIMS=/" %%A IN ('date/t') DO SET nowDay=%%A
+
+REM ///////////////////////////////////////////////////////////
+REM // Lista em log os arquivos encontrados //
+REM ///////////////////////////////////////////////////////////
+
+FORFILES /S /p C:\backup\diario\ /d -3 /C "CMD /C echo @FILE @FDATE" > C:\backup\logs\%nowDay%.log
+
+REM ///////////////////////////////////////////////////////////
+REM // Remove os arquivos encontrados //
+REM ///////////////////////////////////////////////////////////
+FORFILES /S /p C:\backup\diario\ /d -1 /c "CMD /C DEL @FILE /Q"
+
+   for /f "tokens=1-3 delims=/ " %%j in ("%date%") do (
+     set day=%%j
+     set month=%%k
+     set year=%%l
+   )
+   set datestr=%year%%month%%day%
+   echo datestr is %datestr%
+   
+   set BACKUP_FILE=C:\Backup\diario\PROD_DB_%datestr%
+   echo backup file name is %BACKUP_FILE%
+   SET PGPASSWORD=postgres
+   echo on
+C:\PostgreSQL\9.2\bin\pg_dump -i -h localhost -p 5432 -U postgres -F c -b -v -f %BACKUP_FILE% nomeBancoDeDados
+
+cd C:\Program Files\7-Zip\ 
+7z.exe a -tzip C:\backup\diario\repositorioprod _%datestr%  C:\RepositorioArquivo
+
+end
