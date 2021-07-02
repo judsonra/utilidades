@@ -1,10 +1,10 @@
 # edit server xml
 <Connector port="8080" maxHttpHeaderSize="8192" protocol="HTTP/1.1"
-           maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
-           enableLookups="false" redirectPort="8443" acceptCount="100"
-           connectionTimeout="20000" disableUploadTimeout="true"
-           compression="force"
-		       useSendfile="false"
-           compressionMinSize="1024"
-           noCompressionUserAgents="gozilla, traviata"
-           compressableMimeType="text/html,text/xml,text/css,text/javascript,application/javascript,application/json"/>	
+	maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+	enableLookups="false" redirectPort="8443" acceptCount="100"
+	connectionTimeout="20000" disableUploadTimeout="true"
+	compression="force"
+	useSendfile="false"
+	compressionMinSize="1024"
+	noCompressionUserAgents="gozilla, traviata"
+	compressableMimeType="text/html,text/xml,text/css,text/javascript,application/javascript,application/json"/>
