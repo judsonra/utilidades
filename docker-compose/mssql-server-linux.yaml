@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  mssql:
+    container_name: zambon
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root  
+    ports:
+      - 1433:1433
+    volumes:
+      - ./data:/var/opt/mssql/data:rw
+      - ./log:/var/opt/mssql/log:rw
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Init.112233
+      - TZ=America/Sao_Paulo 
+      - MSSQL_PID=Express
