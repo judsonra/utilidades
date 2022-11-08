@@ -1,0 +1,33 @@
+version: '3.7'
+
+networks:
+  aplicacao-network:
+    external: true
+
+#x-padrao: &padrao
+#  networks:
+#    - aplicacao-network
+#  restart: always
+
+
+services:
+  #Aplicacao apache httpd proxy reverso.
+  apache:
+    container_name: apache
+    image: httpd:2.4.54-bullseye
+    networks:
+      - aplicacao-network
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf:/usr/local/apache2/conf
+      - ./htdocs:/usr/local/apache2/htdocs
+      - ./logs:/usr/local/apache2/logs
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100M"
+        max-file: "5"
