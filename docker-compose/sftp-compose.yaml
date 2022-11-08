@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  sftp:
+    container_name: sftp
+    image: atmoz/sftp
+    volumes:
+      - ./arquivos:/home/antonio/upload
+    ports:
+      - "2222:22"
+    command: antonio:123456:::upload
+    
+    
+    #servico sfpt usuario antonio senha 123456
