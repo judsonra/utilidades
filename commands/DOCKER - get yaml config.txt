@@ -1,0 +1,4 @@
+# Busca caminho do yaml de configuracao
+docker inspect --format '{{ index .Config.Labels "com.docker.compose.project.config_files" }}' <container_id>;
+# Busca caminho de todos yaml sendo executado no servidor
+docker inspect --format '{{ index .Config.Labels "com.docker.compose.project.config_files" }}' $(docker ps -aq);
