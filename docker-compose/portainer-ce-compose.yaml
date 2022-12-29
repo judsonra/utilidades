@@ -1,0 +1,28 @@
+# Para criar senha, substituir pelo valor desejado entre as aspas
+# docker run --rm httpd:2.4-alpine htpasswd -nbB admin 'admin' | cut -d ":" -f 2
+# Duplicar os $ no valor retornado
+
+version: '3.8'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    privileged: true
+    command: -H unix:///var/run/docker.sock
+    command: --admin-password '$$2y$$05$$8bYSlvpy7sIQQfq0UBotpeZrG0SKsFXpkkz.HAYUTMKdjjFzAhThm'
+    restart: unless-stopped
+    networks:
+    - my-net
+    ports:
+    - 8000:8000
+    - 9443:9443
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - portainer_ce_data:/data
+
+volumes:
+  portainer_ce_data:
+networks:
+  my-net:
+    external: true
