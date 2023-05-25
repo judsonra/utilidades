@@ -1,0 +1,76 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    hostname: postgres
+    container_name: postgres
+    restart: no
+    environment:
+      POSTGRES_USER: keycloak_local
+      POSTGRES_PASSWORD: keycloak_local
+      POSTGRES_DB: keycloak_local
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rede-teste
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "2"   
+
+  adminer:
+    image: adminer
+    hostname: adminer
+    container_name: adminer
+    restart: no
+    depends_on:
+      - postgres 
+    ports:
+      - 8080:8080
+    networks:
+      - rede-teste
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "2"   
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0
+    container_name: keycloak
+    depends_on:
+      - postgres 
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak_local
+      - KC_DB_USERNAME=keycloak_local
+      - KC_DB_PASSWORD=keycloak_local
+      - KC_DB_SCHEMA=public
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_PROXY=edge
+      # - KEYCLOAK_USER=admin
+      # - DB_VENDOR=postgres
+      # - DB_ADDR=192.168.62.71
+      # - DB_DATABASE=pmkeycloakhmg_v20
+      # - DB_USER=pmkeycloakhmg_v20
+      # - DB_SCHEMA=public
+      # - DB_PASSWORD=zvuOYJbb0zCk3v0j7b5h
+      # - PROXY_ADDRESS_FORWARDING=true
+    command: start-dev
+    ports:
+      - 3000:8080
+    networks:
+      - rede-teste
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "2"   
+
+
+networks:
+  rede-teste:
+
+volumes:
+  postgres_data:
