@@ -50,14 +50,6 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_PROXY=edge
-      # - KEYCLOAK_USER=admin
-      # - DB_VENDOR=postgres
-      # - DB_ADDR=192.168.62.71
-      # - DB_DATABASE=pmkeycloakhmg_v20
-      # - DB_USER=pmkeycloakhmg_v20
-      # - DB_SCHEMA=public
-      # - DB_PASSWORD=zvuOYJbb0zCk3v0j7b5h
-      # - PROXY_ADDRESS_FORWARDING=true
     command: start-dev
     ports:
       - 3000:8080
