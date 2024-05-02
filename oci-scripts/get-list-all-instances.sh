@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#Executar script e direcionar saida para um arquivo
+#sh get-list-all-instances.sh > inventario.csv
+
 # Para obter a lista de compartimentos
 compartimentos=$(oci iam compartment list --all --query "data[*].{nome:\"name\", ocid:\"id\"}")
 
